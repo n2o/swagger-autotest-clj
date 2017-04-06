@@ -1,15 +1,19 @@
 (ns swagger-autotest.core
-  (:require [clj-http.client :as client])
+  (:require [clj-http.client :as client]
+            [swagger-autotest.parse :as parse])
   (:gen-class))
 
-(defn prepare-query [entry]
-  (let [route (str (first entry))
+(def config
+  (parse/load-config "swagger.yml"))
+
+(defn prepare-query [config]
+  (let [entry (first (:paths config))
+        base (parse/construct-base-url config)
+        route (str (first entry))
         uri (str base (subs route 1 (count route)))
         definitions (second entry)]
     [uri definitions]))
-(prepare-query (first (:paths config)))
-
-
+(prepare-query config)
 
 (defn -main
   "I don't do a whole lot ... yet."

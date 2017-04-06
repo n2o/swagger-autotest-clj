@@ -1,0 +1,19 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/swagger_autotest
+    docker:
+      - image: clojure:alpine
+    environment:
+      LEIN_ROOT=nbd
+    steps:
+      - checkout
+      - restore_cache:
+          key: << checksum "project.clj" >>
+      - run: lein test
+      - save_cache:
+          paths:
+            - $HOME/.m2
+            - $HOME/.lein
+          key: << checksum "project.clj" >>
+      - run: lein uberjar

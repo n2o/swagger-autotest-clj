@@ -1,7 +1,7 @@
-(ns swagger-autotest.core-test
+(ns swagger-autotest.parse-test
   (:require [clojure.test :refer :all]
             [clojure.spec :as s]
-            [swagger-autotest.core :refer :all]))
+            [swagger-autotest.parse :refer :all]))
 
 (def test-config
   (load-config "swagger.yml"))
