@@ -10,8 +10,7 @@ jobs:
       - checkout
       - restore_cache:
           key: << checksum "project.clj" >>
-      - run:
-          - lein test
+      - run: lein test
       - save_cache:
           paths:
             - $HOME/.m2
