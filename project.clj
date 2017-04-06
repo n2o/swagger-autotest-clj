@@ -8,7 +8,8 @@
                  [io.forward/yaml "1.0.6"]
                  [clj-http "3.4.1"]]
   :plugins [[lein-ancient "0.6.10"]
-            [com.jakemccrary/lein-test-refresh "0.19.0"]]
+            [lein-kibit "0.1.3"]
+            [lein-set-version "0.4.1"]]
   :main ^:skip-aot swagger-autotest.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
