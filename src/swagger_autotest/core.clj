@@ -4,7 +4,7 @@
   (:gen-class))
 
 (def config
-  (load-config "swagger.yml"))
+  (parse/load-config "swagger.yml"))
 
 (defn prepare-query [config]
   (let [entry (first (:paths config))
