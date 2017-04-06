@@ -10,9 +10,11 @@ jobs:
       - checkout
       - restore_cache:
           key: << checksum "project.clj" >>
+      - run:
+          - lein test
       - save_cache:
           paths:
             - $HOME/.m2
             - $HOME/.lein
           key: << checksum "project.clj" >>
-      - run: lein do test, uberjar
+      - run: lein uberjar
