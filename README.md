@@ -1,4 +1,5 @@
 # swagger-autotest
+[![CircleCI](https://circleci.com/gh/n2o/swagger-autotest-clj.svg?style=shield)](https://circleci.com/gh/n2o/swagger-autotest-clj)
 
 FIXME: description
 
