@@ -12,7 +12,8 @@
   "Extract path to API from config file."
   [config]
   (when-not (nil? (:host config))
-    (str (first (:schemes config)) "://"
+    (str (first (:schemes config))
+         "://"
          (:host config)
          (:basePath config))))
 
