@@ -1,12 +1,18 @@
 (ns swagtest.parser.parser-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.pprint :as pprint]
+            [clojure.test :refer [is deftest testing]]
             [clojure.spec :as s]
             [clojure.spec.test :as stest]
-            [swagtest.parser.yaml :as yparser]
-            [swagtest.test.lib]))
+            [swagtest.parser.yaml :as yparser]))
 
 (def test-config
   (yparser/load-config "swagger.yml"))
+
+(defn- summarize-results' [spec-check]
+  (map #(-> % :clojure.spec.test.check/ret pprint/pprint) spec-check))
+
+(defn check' [spec-check]
+  (is (nil? (-> spec-check first :failure)) (summarize-results' spec-check)))
 
 ;; -----------------------------------------------------------------------------
 ;; Tests
@@ -15,4 +21,4 @@
   (testing "Get base-route from configuration"
     (let [url (yparser/construct-base-url test-config)]
       (is (= "http://localhost:4284/api" url))
-      (tlib/check' (stest/check `swagtest.parser.yaml/construct-base-url)))))
+      (check' (stest/check `swagtest.parser.yaml/construct-base-url)))))

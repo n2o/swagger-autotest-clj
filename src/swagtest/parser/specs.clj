@@ -9,6 +9,7 @@
 (s/fdef swagtest.parser.yaml/construct-base-url
         :args (s/cat :config string?)
         :ret ::maybe-url)
-;; (stest/instrument 'swagtest.parse/construct-base-url)
-;; (s/exercise-fn `swagtest.parse/construct-base-url)
-;; (stest/abbrev-result (first (stest/check `swagtest.parse/construct-base-url)))
+
+;; (stest/instrument 'swagtest.parser.yaml/construct-base-url)
+;; (s/exercise-fn `swagtest.parser.yaml/construct-base-url)
+;; (stest/abbrev-result (first (stest/check `swagtest.parser.yaml/construct-base-url)))
