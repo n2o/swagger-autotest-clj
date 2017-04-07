@@ -1,4 +1,4 @@
-(ns swagger-autotest.parse
+(ns swagtest.parse
   (:require [yaml.core :as yaml]
             [clojure.walk :refer [keywordize-keys]]))
 

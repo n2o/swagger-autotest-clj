@@ -1,36 +1,12 @@
-# swagger-autotest
+# swagtest
 
-[![CircleCI](https://circleci.com/gh/n2o/swagger-autotest-clj.svg?style=shield)](https://circleci.com/gh/n2o/swagger-autotest-clj)
+[![CircleCI](https://circleci.com/gh/n2o/swagtest.svg?style=shield)](https://circleci.com/gh/n2o/swagtest)
 
-## Installation
-
-Download from http://example.com/FIXME.
-
-## Usage
-
-FIXME: explanation
-
-    $ java -jar swagger-autotest-0.1.0-standalone.jar [args]
-
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
+Automatic testing APIs based on their swagger definitions.
 
 ## License
 
-Copyright © 2017 FIXME
+Copyright © 2017 Christian Meter
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.

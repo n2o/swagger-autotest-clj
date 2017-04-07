@@ -1,6 +1,6 @@
-(ns swagger-autotest.core
+(ns swagtest.core
   (:require [clj-http.client :as client]
-            [swagger-autotest.parse :as parse])
+            [swagtest.parse :as parse])
   (:gen-class))
 
 (def config

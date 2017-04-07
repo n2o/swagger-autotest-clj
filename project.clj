@@ -1,4 +1,4 @@
-(defproject swagger-autotest "0.1.0-SNAPSHOT"
+(defproject swagtest "0.1.0-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
@@ -10,6 +10,6 @@
   :plugins [[lein-ancient "0.6.10"]
             [lein-kibit "0.1.3"]
             [lein-set-version "0.4.1"]]
-  :main ^:skip-aot swagger-autotest.core
+  :main ^:skip-aot swagtest.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
