@@ -21,4 +21,5 @@
   (testing "Get base-route from configuration"
     (let [url (yparser/construct-base-url test-config)]
       (is (= "http://localhost:4284/api" url))
+      (is (nil? (yparser/construct-base-url "I am groot.")))
       (check' (stest/check `swagtest.parser.yaml/construct-base-url)))))
