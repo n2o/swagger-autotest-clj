@@ -5,8 +5,8 @@
 (defn load-config [path]
   (keywordize-keys (yaml/from-file path)))
 
-(def config
-  (load-config "swagger.yml"))
+(def config (load-config "swagger.yml"))
+(def paths (:paths config))
 
 (defn construct-base-url
   "Extract path to API from config file."
@@ -16,15 +16,28 @@
          "://"
          (:host config)
          (:basePath config))))
+;; (construct-base-url config)
 
-(defn prepare-query [config]
-  (let [entry (first (:paths config))
-        base (construct-base-url config)
-        route (str (first entry))
-        uri (str base (subs route 1 (count route)))
-        definitions (second entry)]
-    [uri definitions]))
-(prepare-query config)
+(def base-url
+  (construct-base-url config))
 
-;; (base y)
-;; (second (first (:paths config)))
+(defn- responses-to-tuple
+  "Convert the responses from the swagger definition from a map to a tuple."
+  [definitions]
+  (let [responses (-> definitions vals first :responses)]
+    (vec (for [[k v] responses] [k v]))))
+
+(defn- convert-entry
+  "Wraps a path definition from the swagger definition to a more usable data
+  structure."
+  [entry base-url]
+  (let [route (str (first entry))
+        uri (str base-url (subs route 1 (count route)))
+        responses (responses-to-tuple (second entry))]
+    {:uri uri, :method nil, :responses responses}))
+;; (convert-entry (first paths) base-url)
+
+(defn summarize-route
+  "Extract all necessary information and return a prepared map."
+  [definition]
+  )
