@@ -1,15 +1,42 @@
 (ns swagtest.parser.specs
-  (:require [clojure.spec :as s]
-            [clojure.spec.test :as stest]))
+  (:require [clojure.spec.alpha :as s]
+            [clojure.spec.gen.alpha :as gen]
+            [clojure.spec.test.alpha :as stest]
+            [miner.strgen :as sg]))
 
-(def url-pattern #"(?i)^(?:(?:https?)://)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$")
-(s/def ::url (s/and string? #(re-matches url-pattern %)))
-(s/def ::maybe-url (s/or ::url nil?))
+(def url-pattern #"https?://[A-Za-z]+\.[A-Za-z]+(:[0-9]+)?(/.+)*")
+(s/def ::url (s/spec (s/and string? #(re-matches url-pattern %))
+                     :gen #(sg/string-generator url-pattern)))
 
 (s/fdef swagtest.parser.yaml/construct-base-url
-        :args (s/cat :config string?)
-        :ret ::maybe-url)
+        :ret ::url)
+
+(s/def ::method #{:get :post :put :delete})
+
+(s/def ::$ref (s/and string? #(.startsWith % "#/definitions/")))
+(s/def ::schema (s/keys :req-un [::$ref]))
+
+(s/def ::description string?)
+
+(s/def ::desc-schema (s/keys :req-un [::description ::schema]))
+
+(s/def ::response (s/cat :http-code keyword? :desc-schema ::desc-schema))
+(s/def ::responses (s/coll-of ::response))
+(s/def ::entry (s/keys :req-un [::url ::method ::responses]))
+
+(def entry {:url "http://foo.bar"
+            :method :get
+            :responses [[:200 {:description "foo"
+                               :schema {:$ref "#/definitions/hello"}}]]})
+
+(s/fdef swagtest.parser.yaml/convert-entry
+        :ret ::entry)
+;; (stest/instrument 'swagtest.parser.yaml/convert-entry)
+;; (s/exercise-fn `swagtest.parser.yaml/convert-entry)
+;; (stest/abbrev-result (first (stest/check `swagtest.parser.yaml/convert-entry)))
+
+
 
 ;; (stest/instrument 'swagtest.parser.yaml/construct-base-url)
-;; (s/exercise-fn `swagtest.parser.yaml/construct-base-url)
+;; (s/exercise-fn `swagtest.parser.yaml/construct-base-url 100)
 ;; (stest/abbrev-result (first (stest/check `swagtest.parser.yaml/construct-base-url)))
