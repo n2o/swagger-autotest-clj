@@ -35,7 +35,7 @@
         uri (str base-url (subs route 1 (count route)))
         responses (responses-to-tuple (second entry))
         method (-> (second entry) keys first)]
-    {:uri uri, :method method, :responses responses :entry entry}))
+    {:uri uri, :method method, :responses responses}))
 ;; (convert-entry (first paths) base-url)
 
 (defn summarize-route
